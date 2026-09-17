@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "regions": ["bom1"],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://tyustemnubltqpvcfklm.supabase.co",
+    "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_CNcwLabAS6745iwrS2j-1A_z-BMUXrM"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_SITE_URL": "https://suryavastrasolar.com"
+    }
+  }
+}
