@@ -26,14 +26,23 @@ the approved design in `SuryaVastra_Expansion_Plan_for_Cowork.md` section 6.
 npm install
 cp .env.example .env.local   # fill in the Supabase key
 npm run dev                  # http://localhost:3000
-npm run build && npm start   # production build
+npm run build                # static export into out/
+npx serve out                # check the exported site
 ```
+
+`npm run build` writes a static site to `out/`. There is no `npm start`: the
+pages are plain HTML by the time the build finishes.
 
 ## Where enquiries go
 
 Every page has a short form. It posts to `/api/enquiry`, which validates the input and
 inserts a row into `public.website_enquiries` in the **suryavastra-staging** Supabase
 project.
+
+That endpoint is a Cloudflare Pages Function in `functions/api/enquiry.ts`, not a
+Next.js route — a static export cannot carry one. It reads its Supabase settings from
+the request context, so they have to be set as Pages environment variables and not
+only baked into the build.
 
 That table is deliberately separate from `public.leads`. A lead needs `customer_id`,
 `branch_id` and `current_stage_id`, so a web form cannot create a well-formed one.
@@ -47,8 +56,10 @@ Row-level security on the table:
 - signed-in staff can read the inbox; `edit_leads` can update it; `manage_config` can
   delete.
 
-Spam is handled by a hidden honeypot field, a per-instance rate limit of 5 submissions
-per 10 minutes, and CHECK constraints on the table itself.
+Spam is handled by a hidden honeypot field, a rate limit of 5 submissions per 10
+minutes, and CHECK constraints on the table itself. The limit counts per Worker
+isolate rather than across the account, so it stops one address hammering the form
+but is not a hard global cap.
 
 Every form also keeps its WhatsApp and call buttons, which stay the fastest route for
 most local customers.
@@ -61,9 +72,32 @@ most local customers.
 | `SUPABASE_PUBLISHABLE_KEY` | The publishable (anon) key. Safe to deploy — RLS limits it to inserting an enquiry |
 | `NEXT_PUBLIC_SITE_URL` | The live address, used for canonical URLs, the sitemap and share cards |
 
-`vercel.json` carries these so a fresh deploy works without setup. Moving them into the
-Vercel project's Environment Variables screen and deleting the `env` block there is
-tidier once the project is settled.
+`vercel.json` still carries these, which keeps Vercel working as a fallback deploy.
+
+## Deploying to Cloudflare Pages
+
+Pages serves `out/` as static files, which are free and unmetered, and runs
+`functions/api/enquiry.ts` for the one dynamic request the site makes.
+
+| Setting | Value |
+|---|---|
+| Build command | `npm run build` |
+| Output directory | `out` |
+| Framework preset | None |
+
+Set all three environment variables above in the Pages project, for **Production and
+Preview both**. `NEXT_PUBLIC_SITE_URL` and `SITE_LIVE` are read during the build, so a
+change to either needs a fresh deploy to take effect; the two Supabase values are read
+at request time by the Function.
+
+`SITE_LIVE` stays unset until the domain is live. While it is unset, `robots.txt`
+disallows everything, so the preview address never competes with the real one in
+Google.
+
+Response headers live in `public/_headers`, which Next copies into `out/` and
+Cloudflare applies at the edge. The Content-Security-Policy there allows the Google
+Fonts hosts that `app/layout.tsx` loads from; adding another external script, font or
+image source means widening that policy too, or the browser silently blocks it.
 
 ## Still to do (from the plan)
 

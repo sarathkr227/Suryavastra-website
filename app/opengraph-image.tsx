@@ -1,6 +1,9 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
+// A static export has to render the share card at build time rather than
+// on request, so the route is pinned static.
+export const dynamic = "force-static";
 export const alt = "SuryaVastra Solar Energy — Narsipatnam";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

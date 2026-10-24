@@ -1,0 +1,8 @@
+# Cloudflare Pages applies these at the edge. A static export has no server to
+# set them, so this file replaces the headers() block that was in next.config.mjs.
+# Keep the font hosts in step with the Google Fonts link in app/layout.tsx.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'
