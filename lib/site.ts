@@ -21,7 +21,7 @@ export const site = {
   hours: "Monday to Saturday, 9 AM to 7 PM · Sunday closed",
   areas: ["Narsipatnam and Anakapalli district", "Kakinada", "Kurnool"],
   /** Set NEXT_PUBLIC_SITE_URL in Vercel once the domain is connected. */
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://suryavastrasolar.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://suryavastrasolarenergy.com",
 } as const;
 
 /** Build a wa.me link with the message pre-filled, exactly as the approved design does. */
