@@ -64,6 +64,25 @@ but is not a hard global cap.
 Every form also keeps its WhatsApp and call buttons, which stay the fastest route for
 most local customers.
 
+### Keeping the database awake
+
+A free Supabase project pauses after roughly a week of inactivity, and a paused
+database makes the form answer "We could not save your details" — so a quiet week
+would cost us enquiries without anything looking broken.
+
+`.github/workflows/supabase-keepalive.yml` calls `public.keepalive()` every three
+days to prevent that. The function returns the current time and reads no data, so
+the anonymous role may execute it safely. If a ping fails the job fails, which turns
+the schedule into a monitor: a failure email means the project is paused and the form
+is down.
+
+GitHub disables scheduled workflows in a repository idle for 60 days. If that
+happens, re-enable the schedule from the Actions tab.
+
+The keep-alive is a workaround for the free tier, not a fix. It does nothing about
+the lack of automatic backups, which is the other reason a paid plan is worth
+considering once the site is taking real enquiries.
+
 ## Environment variables
 
 | Name | What it is |

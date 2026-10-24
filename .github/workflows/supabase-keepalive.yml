@@ -1,0 +1,60 @@
+name: Supabase keep-alive
+
+# A free Supabase project pauses after roughly a week of inactivity. A paused
+# database makes the enquiry form answer "We could not save your details", so a
+# quiet week would silently cost us customer enquiries.
+#
+# This calls public.keepalive() every three days, which is frequent enough to
+# get two attempts before the project could pause. If a ping fails the job fails,
+# so GitHub emails us rather than letting the site break unnoticed.
+#
+# Note: GitHub disables scheduled workflows in a repository with no activity for
+# 60 days. If this repo goes quiet for that long, re-enable the schedule from the
+# Actions tab, or run it by hand with "Run workflow".
+
+on:
+  schedule:
+    # Every third day at 06:17 UTC (11:47 IST). An off-the-hour minute avoids
+    # the congestion that delays jobs scheduled on the hour.
+    - cron: "17 6 */3 * *"
+  workflow_dispatch:
+
+# Two runs pinging the same database at once would be pointless.
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    name: Ping the database
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call keepalive()
+        env:
+          SUPABASE_URL: https://tyustemnubltqpvcfklm.supabase.co
+          # The publishable (anon) key, which is already committed in
+          # vercel.json. It can execute keepalive() and insert one website
+          # enquiry — nothing else, and it cannot read a single row back.
+          SUPABASE_KEY: sb_publishable_CNcwLabAS6745iwrS2j-1A_z-BMUXrM
+        run: |
+          set -euo pipefail
+
+          code=$(curl --silent --show-error --location \
+            --max-time 30 --retry 3 --retry-delay 10 --retry-connrefused \
+            --output response.txt --write-out '%{http_code}' \
+            --request POST "${SUPABASE_URL}/rest/v1/rpc/keepalive" \
+            --header "apikey: ${SUPABASE_KEY}" \
+            --header "Authorization: Bearer ${SUPABASE_KEY}" \
+            --header 'Content-Type: application/json' \
+            --data '{}') || code=000
+
+          echo "HTTP ${code}"
+          echo "Response: $(cat response.txt)"
+
+          if [ "${code}" != "200" ]; then
+            echo "::error::Supabase keepalive failed (HTTP ${code}). The project is probably paused — resume suryavastra-staging in the Supabase dashboard. While it is paused the website's enquiry form cannot save anything."
+            exit 1
+          fi
+
+          echo "Database answered. The project will not pause."
