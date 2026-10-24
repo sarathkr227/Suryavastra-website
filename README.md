@@ -76,8 +76,13 @@ the anonymous role may execute it safely. If a ping fails the job fails, which t
 the schedule into a monitor: a failure email means the project is paused and the form
 is down.
 
-GitHub disables scheduled workflows in a repository idle for 60 days. If that
-happens, re-enable the schedule from the Actions tab.
+Two things about the schedule itself. GitHub only fires `schedule` triggers on the
+**default branch**, so this does nothing at all until the workflow is merged into
+`main` — until then use "Run workflow" by hand. And GitHub disables schedules in a
+repository idle for 60 days, which produces no failed run and therefore no email:
+the monitor simply stops, the project pauses, and the form breaks quietly. If
+enquiries matter, point the job at an external dead-man's-switch so that silence
+itself raises an alarm.
 
 The keep-alive is a workaround for the free tier, not a fix. It does nothing about
 the lack of automatic backups, which is the other reason a paid plan is worth
@@ -90,8 +95,18 @@ considering once the site is taking real enquiries.
 | `NEXT_PUBLIC_SUPABASE_URL` | The suryavastra-staging project URL |
 | `SUPABASE_PUBLISHABLE_KEY` | The publishable (anon) key. Safe to deploy — RLS limits it to inserting an enquiry |
 | `NEXT_PUBLIC_SITE_URL` | The live address, used for canonical URLs, the sitemap and share cards |
+| `SITE_LIVE` | Build-time only. Must be exactly `true` for the site to be indexable; anything else disallows every crawler |
 
-`vercel.json` still carries these, which keeps Vercel working as a fallback deploy.
+`NEXT_PUBLIC_SITE_URL` and `SITE_LIVE` are read while the pages are generated, so
+changing either one needs a fresh deploy. The two Supabase values are read per
+request by the enquiry function, so those apply as soon as they are saved.
+
+`vercel.json` still carries the Supabase values, but **Vercel is no longer a
+complete fallback**. With `output: "export"` a Vercel build produces static files
+and nothing else: the pages all work, and `/api/enquiry` does not exist there, so
+every form fails silently. Its `regions` and runtime `env` settings are now inert.
+Either delete the file and disconnect the Vercel project, or treat that deploy as
+a read-only mirror — do not rely on it to take enquiries.
 
 ## Deploying to Cloudflare Pages
 
