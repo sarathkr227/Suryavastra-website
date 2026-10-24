@@ -35,8 +35,7 @@ export const nav = [
   { href: "/", label: "Home" },
   { href: "/home-solar", label: "Home Solar" },
   { href: "/business-solar", label: "Business & Farm" },
-  { href: "/store", label: "Solar Store" },
   { href: "/amc-service", label: "AMC & Service" },
-  { href: "/cctv-electrical", label: "CCTV & Electrical" },
+  { href: "/customer-help", label: "Customer Help" },
   { href: "/contact", label: "Contact" },
 ] as const;

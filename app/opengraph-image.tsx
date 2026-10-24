@@ -57,7 +57,7 @@ export default async function Image() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <span style={{ fontSize: 62, fontWeight: 800, lineHeight: 1.1 }}>
-            Solar, service and security for homes, farms and businesses.
+            Rooftop solar for homes, farms and businesses.
           </span>
           <span style={{ fontSize: 30, color: "#B9C8D8" }}>
             PM Suryaghar vendor · Narsipatnam, Anakapalli District · 76800 43727
@@ -72,7 +72,7 @@ export default async function Image() {
             color: "#0D1B3E",
           }}
         >
-          {["Home solar", "Business solar", "Solar store", "AMC & service"].map(
+          {["PM Suryaghar", "Home solar", "Business & farm", "AMC & service"].map(
             (chip) => (
               <span
                 key={chip}

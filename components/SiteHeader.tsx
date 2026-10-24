@@ -13,8 +13,8 @@ export default function SiteHeader() {
   return (
     <>
       <div className="announce">
-        <Link href="/store">
-          New SuryaVastra Solar Store opens this Sankranti, January 2027 →
+        <Link href="/home-solar">
+          PM Suryaghar subsidy up to ₹78,000 · free site survey in Narsipatnam →
         </Link>
       </div>
       <header className="top">

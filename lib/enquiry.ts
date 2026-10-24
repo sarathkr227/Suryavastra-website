@@ -1,9 +1,12 @@
+/**
+ * The database CHECK constraint still accepts 'store' and 'cctv_electrical' from
+ * when those pages existed. Leaving it alone keeps historical rows valid; the
+ * site simply no longer sends either value.
+ */
 export const ENQUIRY_TYPES = [
   "home_solar",
   "business_solar",
-  "store",
   "amc",
-  "cctv_electrical",
   "general",
 ] as const;
 

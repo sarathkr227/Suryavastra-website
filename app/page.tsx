@@ -4,19 +4,18 @@ import {
   AmcIcon,
   ArrowIcon,
   BusinessIcon,
-  CctvIcon,
+  HelpIcon,
   HomeSolarIcon,
   Ic,
-  StoreIcon,
   VisitIcon,
 } from "@/components/Icons";
 import { CallButton, Section, Ticks, WaButton } from "@/components/ui";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SuryaVastra Solar Energy — Solar, service and security in Narsipatnam",
+  title: "SuryaVastra Solar Energy — Rooftop solar in Narsipatnam",
   description:
-    "PM Suryaghar rooftop solar, business and farm solar, solar products store, AMC plans from ₹2,999, and CCTV in Narsipatnam, Andhra Pradesh.",
+    "PM Suryaghar rooftop solar with subsidy up to ₹78,000. Registered vendor in Narsipatnam, Anakapalli district, Kakinada and Kurnool. Free site survey, bank loan help, and AMC plans from ₹2,999.",
   alternates: { canonical: "/" },
 };
 
@@ -34,22 +33,16 @@ const services = [
     body: "Rooftop solar for shops, schools, mills, cold storages and aqua farms.",
   },
   {
-    href: "/store",
-    icon: <StoreIcon />,
-    title: "Solar Store",
-    body: "Street lights, inverters, batteries, fans, pumps, water heaters and installer supplies.",
-  },
-  {
     href: "/amc-service",
     icon: <AmcIcon />,
     title: "AMC & Service",
     body: "Yearly maintenance plans from ₹2,999. Any brand, any installer.",
   },
   {
-    href: "/cctv-electrical",
-    icon: <CctvIcon />,
-    title: "CCTV & Electrical",
-    body: "Security cameras, wiring, earthing and power backup.",
+    href: "/customer-help",
+    icon: <HelpIcon />,
+    title: "Customer Help",
+    body: "Already have a system? Inverter faults, net meter readings and subsidy status.",
   },
   {
     href: "/contact",
@@ -84,16 +77,18 @@ export default function HomePage() {
       <section className="hero">
         <div className="wrap hero-grid">
           <div>
-            <p className="kicker gold">PM Suryaghar vendor · Narsipatnam</p>
-            <h1>Solar, service and security for homes, farms and businesses.</h1>
+            <p className="kicker gold">Registered PM Suryaghar vendor · Narsipatnam</p>
+            <h1>Rooftop solar for your home, with subsidy up to ₹78,000.</h1>
             <p className="lede">
-              We install rooftop solar, supply solar products, and keep your system working
-              year after year.
+              We register you under PM Suryaghar, handle the DISCOM paperwork and the
+              bank loan, install the system, and service it for years afterwards.
             </p>
             <div className="btn-row">
               <WaButton
-                text="Hi SuryaVastra, I want to know more about your services."
-                label="WhatsApp us"
+                text={
+                  "Hi SuryaVastra, I want a free site survey for home solar.\nName:\nVillage/Town:"
+                }
+                label="Book a free survey"
               />
               <CallButton light />
             </div>
@@ -136,18 +131,18 @@ export default function HomePage() {
       <Section>
         <div className="promo">
           <div>
-            <p className="kicker gold">Coming this Sankranti</p>
-            <h2>SuryaVastra Solar Store opens January 2027</h2>
+            <p className="kicker gold">No charge, no obligation</p>
+            <h2>Find out what your roof can do</h2>
             <p>
-              Solar lights, inverters, batteries, fans, pumps and more, with a live demo
-              system you can see working.
+              Tell us your monthly electricity bill and we will measure your roof,
+              estimate your subsidy and give you a written quotation.
             </p>
           </div>
-          <Link className="btn btn-gold" href="/store">
+          <Link className="btn btn-gold" href="/home-solar">
             <Ic>
               <ArrowIcon />
             </Ic>
-            <span>See what we&apos;ll stock</span>
+            <span>Estimate my subsidy</span>
           </Link>
         </div>
       </Section>
