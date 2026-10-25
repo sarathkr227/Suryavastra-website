@@ -41,6 +41,11 @@ Because the public side needs no server, it is a **static export**
 (`output: "export"`), which Cloudflare serves free and unmetered. The one dynamic
 piece is `functions/api/enquiry.ts`.
 
+That Function carries the Supabase URL and publishable key in its own source as a
+fallback, because Pages environment variables must be set per environment and a
+missing one loses enquiries without any visible error. The key grants nothing but
+a single insert into `website_enquiries`.
+
 **What this costs us, stated plainly:** artifacts are shared by link, so the
 role permissions the portal plan specified — Arjun and Ganga never seeing
 quotation amounts — cannot be enforced technically. Separate artifacts per role

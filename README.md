@@ -42,8 +42,14 @@ project.
 
 That endpoint is a Cloudflare Pages Function in `functions/api/enquiry.ts`, not a
 Next.js route — a static export cannot carry one. It reads its Supabase settings from
-the request context, so they have to be set as Pages environment variables and not
-only baked into the build.
+the request context rather than from the build, so Pages environment variables are
+what reach it.
+
+Those variables have to be set for **Production and Preview separately**, and missing
+them on either one silently loses enquiries. So the Function falls back to the project
+URL and publishable key in its own source when they are absent. Neither value is
+secret — the key can only insert one row into `website_enquiries` and cannot read any
+back — and the environment variables still take precedence when set.
 
 That table is deliberately separate from `public.leads`. A lead needs `customer_id`,
 `branch_id` and `current_stage_id`, so a web form cannot create a well-formed one.
