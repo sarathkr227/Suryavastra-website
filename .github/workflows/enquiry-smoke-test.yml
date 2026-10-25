@@ -9,8 +9,14 @@ name: Enquiry smoke test
 # It writes one obviously-fake row into website_enquiries each time it runs.
 # Delete the row afterwards, and delete this workflow once the form is proven.
 
+# workflow_dispatch only works from the default branch, and this lives on a
+# feature branch, so it runs on push to that branch instead. Both go when the
+# workflow does.
 on:
   workflow_dispatch:
+  push:
+    branches: [ccr-7dfe7e86-wnpyi8]
+    paths: ['.github/workflows/enquiry-smoke-test.yml']
 
 jobs:
   insert:
