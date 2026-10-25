@@ -67,7 +67,7 @@ export default function ContactPage() {
               ))}
             </ul>
             <p className="note">
-              New store opening on Narsipatnam main road this Sankranti, January 2027.
+              Free site survey anywhere we serve. No charge and no obligation.
             </p>
           </div>
         </div>
@@ -85,9 +85,8 @@ export default function ContactPage() {
               options: [
                 "Home solar / PM Suryaghar",
                 "Business or farm solar",
-                "Solar products",
                 "AMC or service",
-                "CCTV or electrical",
+                "Help with my existing system",
                 "Something else",
               ],
             },

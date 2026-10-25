@@ -8,18 +8,18 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Solar, service and security in Narsipatnam`,
+    default: `${site.name} — Rooftop solar in Narsipatnam`,
     template: `%s — ${site.name}`,
   },
   description:
-    "PM Suryaghar rooftop solar, business and farm solar, solar products store, AMC plans from ₹2,999, and CCTV in Narsipatnam, Andhra Pradesh.",
+    "PM Suryaghar rooftop solar with subsidy up to ₹78,000. Registered vendor in Narsipatnam, Anakapalli district, Kakinada and Kurnool. Free site survey, bank loan help, and AMC plans from ₹2,999.",
   applicationName: site.name,
   keywords: [
     "rooftop solar Narsipatnam",
     "PM Suryaghar vendor Anakapalli",
     "solar subsidy Andhra Pradesh",
     "solar AMC service",
-    "solar store Narsipatnam",
+    "rooftop solar Kakinada",
   ],
   openGraph: {
     type: "website",
@@ -42,7 +42,7 @@ const localBusiness = {
   email: site.email,
   image: `${site.url}/opengraph-image`,
   description:
-    "PM Suryaghar registered rooftop solar vendor in Narsipatnam, Andhra Pradesh. Home and business solar, solar products, AMC and service, CCTV and electrical work.",
+    "PM Suryaghar registered rooftop solar vendor in Narsipatnam, Andhra Pradesh. Home and business rooftop solar with subsidy and bank loan assistance, plus annual maintenance for systems from any installer.",
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address.street,
@@ -65,9 +65,8 @@ const localBusiness = {
   makesOffer: [
     "Rooftop solar installation under PM Suryaghar",
     "Business and farm solar",
-    "Solar products store",
     "Solar annual maintenance contracts",
-    "CCTV and electrical work",
+    "Solar system service and repair",
   ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
 };
 

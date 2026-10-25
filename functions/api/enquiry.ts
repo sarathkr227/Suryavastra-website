@@ -5,10 +5,23 @@ import { validateEnquiry } from "../../lib/enquiry";
  * handler, which a static export cannot keep, and does the same work: drop
  * bots, validate, throttle, insert one row.
  *
- * NEXT_PUBLIC_SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY have to be set as
- * Pages environment variables — a Function reads them from the request context,
- * not from process.env, so the values baked into the static build never reach it.
+ * A Function reads its settings from the request context, not from process.env,
+ * so the values baked into the static build never reach it. Pages binds its own
+ * environment variables at deploy time, and they have to be set separately for
+ * Production and Preview — forgetting either answers every submission with
+ * "We could not save your details" and loses the enquiry.
+ *
+ * Rather than fail that way, fall back to the known values when the variables
+ * are absent. Neither is secret: the URL only identifies the project, and the
+ * publishable key is restricted by row-level security to inserting one row into
+ * website_enquiries and nothing else — it cannot read a single row back. Both
+ * are already committed in vercel.json and in the keep-alive workflow. The
+ * environment variables still win when set, so the site can be pointed at
+ * another project without touching this file.
  */
+
+const DEFAULT_SUPABASE_URL = "https://tyustemnubltqpvcfklm.supabase.co";
+const DEFAULT_SUPABASE_KEY = "sb_publishable_CNcwLabAS6745iwrS2j-1A_z-BMUXrM";
 
 type Env = {
   NEXT_PUBLIC_SUPABASE_URL?: string;
@@ -72,13 +85,8 @@ const SAVE_FAILED = "We could not save your details. Please WhatsApp or call us.
 export async function onRequestPost(context: RequestContext): Promise<Response> {
   try {
     const { request, env } = context;
-    const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = env.SUPABASE_PUBLISHABLE_KEY;
-
-    if (!supabaseUrl || !supabaseKey) {
-      console.error("Supabase environment variables are not set.");
-      return json({ error: SAVE_FAILED }, 503);
-    }
+    const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+    const supabaseKey = env.SUPABASE_PUBLISHABLE_KEY || DEFAULT_SUPABASE_KEY;
 
     let body: Record<string, unknown>;
     try {

@@ -1,24 +1,25 @@
 # SuryaVastra Solar Energy — website
 
-The public website for SuryaVastra Solar Energy, Narsipatnam. Seven pages, built from
-the approved design in `SuryaVastra_Expansion_Plan_for_Cowork.md` section 6.
+The public website for SuryaVastra Solar Energy, Narsipatnam. Six pages. What the
+site is for and why it is built this way is in [`WEBSITE_PLAN.md`](WEBSITE_PLAN.md);
+read that before changing the shape of it.
 
 | Page | Path |
 |---|---|
 | Home | `/` |
 | Home Solar | `/home-solar` |
 | Business & Farm Solar | `/business-solar` |
-| Solar Store | `/store` |
 | AMC & Service | `/amc-service` |
-| CCTV & Electrical | `/cctv-electrical` |
+| Customer Help | `/customer-help` |
 | Contact | `/contact` |
 
-## Content rules (from the plan)
+## Content rules
 
-- English only.
+- English only. Customer documents stay bilingual English/Telugu.
 - No product prices online. AMC plan prices are shown, product prices are not.
-- The banner says the store opens at Sankranti 2027.
-- Phase 2–3 business lines stay off the site until they are running.
+- Business lines stay off the site until they are running. Store/retail and
+  CCTV are both out — see `WEBSITE_PLAN.md`.
+- Home solar leads; everything else is secondary to it.
 
 ## Running it
 
@@ -41,8 +42,14 @@ project.
 
 That endpoint is a Cloudflare Pages Function in `functions/api/enquiry.ts`, not a
 Next.js route — a static export cannot carry one. It reads its Supabase settings from
-the request context, so they have to be set as Pages environment variables and not
-only baked into the build.
+the request context rather than from the build, so Pages environment variables are
+what reach it.
+
+Those variables have to be set for **Production and Preview separately**, and missing
+them on either one silently loses enquiries. So the Function falls back to the project
+URL and publishable key in its own source when they are absent. Neither value is
+secret — the key can only insert one row into `website_enquiries` and cannot read any
+back — and the environment variables still take precedence when set.
 
 That table is deliberately separate from `public.leads`. A lead needs `customer_id`,
 `branch_id` and `current_stage_id`, so a web form cannot create a well-formed one.
@@ -56,7 +63,7 @@ Row-level security on the table:
 - signed-in staff can read the inbox; `edit_leads` can update it; `manage_config` can
   delete.
 
-Spam is handled by a hidden honeypot field, a rate limit of 5 submissions per 10
+Spam is handled by a hidden honeypot field, a rate limit of 15 submissions per 10
 minutes, and CHECK constraints on the table itself. The limit counts per Worker
 isolate rather than across the account, so it stops one address hammering the form
 but is not a hard global cap.
@@ -133,9 +140,12 @@ Cloudflare applies at the edge. The Content-Security-Policy there allows the Goo
 Fonts hosts that `app/layout.tsx` loads from; adding another external script, font or
 image source means widening that policy too, or the browser silently blocks it.
 
-## Still to do (from the plan)
+## Still to do
 
-- Replace the illustrations with real photos: 3–6 finished rooftop installs, the shop
-  front, and later the store and demo wall.
-- When the store opens, update the address, map link and banner.
+- Replace the illustrations with real photos: 3–6 finished rooftop installs and the
+  shop front.
+- Place the reference files in `/reference`: the approved design draft, logo files,
+  the three fillable PDFs, the AMC price list and the Noto fonts.
+- Confirm whether the AMC plan prices include GST. The page currently says "GST as
+  applicable", which a customer cannot act on.
 - Update the Google Business Profile and add the website link.

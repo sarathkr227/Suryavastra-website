@@ -62,11 +62,18 @@ export const BusinessIcon = () => (
   </svg>
 );
 
-export const StoreIcon = () => (
+export const HelpIcon = () => (
   <svg viewBox="0 0 32 32">
-    <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
-      <path d="M5 12 7 5h18l2 7M5 12v15h22V12M5 12h22" />
-      <path d="M13 27v-8h6v8" />
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="16" cy="16" r="12" />
+      <path d="M12.5 12.5a3.5 3.5 0 1 1 5 3.2c-1 .6-1.5 1.3-1.5 2.3v.5" />
+      <path d="M16 23h.01" />
     </g>
   </svg>
 );
@@ -75,15 +82,6 @@ export const AmcIcon = () => (
   <svg viewBox="0 0 32 32">
     <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M20 6a6 6 0 0 0-7.6 7.6L5 21a2.8 2.8 0 0 0 4 4l7.4-7.4A6 6 0 0 0 24 10l-3.5 3.5-3-1-1-3Z" />
-    </g>
-  </svg>
-);
-
-export const CctvIcon = () => (
-  <svg viewBox="0 0 32 32">
-    <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round">
-      <path d="M4 9l18 5-2 6L4 15Z" />
-      <path d="M20 17l4 1v5M24 23h4M9 16l-1 6H4" />
     </g>
   </svg>
 );

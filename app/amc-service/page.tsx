@@ -31,7 +31,7 @@ const plans = [
       "4 panel cleanings a year",
       "2 health checks with generation report",
       "Response within 48 hours",
-      "5% off parts from our store",
+      "5% discount on replacement parts",
     ],
   },
   {
@@ -43,7 +43,7 @@ const plans = [
       "2 health checks with generation report",
       "Response within 24 hours",
       "Free repair labour",
-      "10% off parts from our store",
+      "10% discount on replacement parts",
     ],
   },
 ];
@@ -148,7 +148,9 @@ export default function AmcServicePage() {
               className="issue"
               key={issue}
               href={wa(
-                `Hi SuryaVastra, I need help with: ${issue}.\nName:\nVillage/Town:`
+                // Same fields as /customer-help asks for, so a customer is not
+                // questioned differently depending on which page they tapped.
+                `Hi SuryaVastra, I need help with: ${issue}.\nName:\nVillage/Town:\nConsumer number:`
               )}
               target="_blank"
               rel="noopener"

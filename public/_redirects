@@ -1,0 +1,7 @@
+# The Solar Store and CCTV & Electrical pages were removed when the site was
+# refocused on PM Suryaghar home solar. Nothing was ever indexed, because
+# SITE_LIVE stayed false throughout, but /store was linked from the sitewide
+# announcement bar on earlier preview builds. Send both somewhere useful rather
+# than to a 404.
+/store              /            301
+/cctv-electrical    /            301
