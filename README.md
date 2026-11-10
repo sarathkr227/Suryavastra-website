@@ -108,12 +108,12 @@ considering once the site is taking real enquiries.
 changing either one needs a fresh deploy. The two Supabase values are read per
 request by the enquiry function, so those apply as soon as they are saved.
 
-`vercel.json` still carries the Supabase values, but **Vercel is no longer a
-complete fallback**. With `output: "export"` a Vercel build produces static files
-and nothing else: the pages all work, and `/api/enquiry` does not exist there, so
-every form fails silently. Its `regions` and runtime `env` settings are now inert.
-Either delete the file and disconnect the Vercel project, or treat that deploy as
-a read-only mirror — do not rely on it to take enquiries.
+**Cloudflare Pages is the only place this site is served from.** `vercel.json` was
+deleted once the build became a static export: with `output: "export"` a Vercel
+build produces static files and nothing else, so the pages would all render but
+`/api/enquiry` would not exist and every form would fail silently. If a Vercel
+project is still connected to this repository, disconnect it rather than leave a
+second copy of the site findable and unable to take enquiries.
 
 ## Deploying to Cloudflare Pages
 
