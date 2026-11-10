@@ -69,8 +69,7 @@ export default function BusinessSolarPage() {
             <h3>For aqua and fish farms</h3>
             <p>
               Aerators and pumps run day and night, so power bills are high. Solar covers
-              the daytime load and cuts that bill. We also supply solar dryers for fish and
-              farm produce.
+              the daytime load and cuts that bill.
             </p>
           </div>
         </div>

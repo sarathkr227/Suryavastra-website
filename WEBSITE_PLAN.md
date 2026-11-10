@@ -68,7 +68,10 @@ back onto the table.
 
 - **Any store, retail or expansion content.** Dropped as a business idea. The
   earlier brief had a `/store` page and a Sankranti 2027 banner; both are gone and
-  should not come back without a decision recorded here.
+  should not come back without a decision recorded here. One line outlived that
+  cull — the aqua farms section offered solar dryers for fish and farm produce,
+  which is a Phase 2 product nobody sells yet. Removed with SK on 10 November
+  2026. The page now promises only what cuts the farm's daytime load.
 - **CCTV and electrical.** Removed from the site. It does not appear in the
   project portfolio, the financial targets or the roadmap.
 - Owner money views — costs, profit, supplier payments. Those stay in the Ledger.
